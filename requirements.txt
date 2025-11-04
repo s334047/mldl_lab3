@@ -1,1 +1,9 @@
+import wandb
 
+wandb.init(project="mldl_lab3")
+
+config = wandb.config
+config.learning_rate = 0.001
+
+for i in range(10):
+    wandb.log({"loss": loss})
