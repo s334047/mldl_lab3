@@ -11,6 +11,9 @@ from utils.validate_loop import validate
 
 def main():
 
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f'Using device: {device}')
+
     # WANDB SETUP
     wandb.login(anonymous="allow")
     wandb.init(project="mldl_lab3")
@@ -23,10 +26,12 @@ def main():
     val_loader = DataLoader(val_set, batch_size=64, shuffle=False, num_workers=4)
 
     #MODEL SETUP: COPIA E INCOLLA DA LAB 2
-    model = CustomNet().cuda()
+    model = CustomNet().to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
+    wandb.watch(model, criterion, log="all", log_freq=100)
+    
     best_acc = 0
 
     # Run the training process for {num_epochs} epochs
