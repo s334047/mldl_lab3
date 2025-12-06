@@ -12,6 +12,7 @@ from utils.validate_loop import validate
 def main():
 
     # WANDB SETUP
+    wandb.login(anonymous="allow")
     wandb.init(project="mldl_lab3")
     config = wandb.config
     config.learning_rate = 0.001
